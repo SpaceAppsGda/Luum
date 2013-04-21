@@ -1,0 +1,71 @@
+<?php
+
+
+Class Informacion
+{
+	var $sTitulo;
+	var $sImagen;
+	var $sDetalle;
+
+	Function addInformacion()
+	{
+
+
+		$query = "INSERT INTO informacion(titulo, imagen, detalle)VALUES('$this->sTitulo', '$this->sImagen', '$this->sDetalle')";
+		
+		try
+		{
+			if( $sql = mysql_query($query))
+			{
+				echo "Se agrego la informacion a la Base de Datos.";
+			}
+			else
+			{
+				echo "[ERROR]: ".mysql_error();
+			}
+		}
+		catch(Exception $e)
+		{
+			echo "[ERROR]:".$e->getMessage();
+		}
+	}
+
+	//..............................................................................................................................................
+
+	Function updateInformacion($iIdInformacion)
+	{
+	
+
+		$query = "UPDATE informacion SET titulo = '$sTitulo', imagen = '$this->sImagen', detalle = '$this->sDetalle' WHERE idInformacion == '$iIdInformacion' ";
+
+		try
+		{
+			mysql_query($query);
+		}
+		catch(Exception $e)
+		{
+			echo "[ERROR]:".$e->getMessage();
+		}
+	}
+
+	//..............................................................................................................................................
+
+	Function deleteInformacion($iIdInformacion)
+	{
+		
+
+		$query = "DELETE FROM informacion WHERE idInformacion ==  iIdInformacion";
+
+		try
+		{
+			mysql_query($query);
+		}
+		catch(Exception $e)
+		{
+			echo "[ERROR]:".$e->getMessage();
+		}
+	}
+
+}
+
+?>

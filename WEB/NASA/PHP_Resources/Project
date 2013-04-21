@@ -1,0 +1,28 @@
+<?php
+
+
+Class Project
+{
+	
+	var $name;
+	var $photo;
+	var $photo2;
+	var $barCode;
+	var $qrCode;
+	var $latitude;
+	var $longitude;
+	var $surface;
+	var $description;
+	var $showDashBoard;
+	var $idMetal;
+	var $idHumities;
+	var $idStatusProject;
+}
+
+function addProject {}
+
+function deleteProject()
+
+function updateProject{}
+
+?>

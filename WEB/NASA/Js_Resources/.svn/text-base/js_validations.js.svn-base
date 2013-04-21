@@ -1,0 +1,566 @@
+
+	function  task_conection(url, parametros)
+	{
+		$.post(url,parametros,function(data) 
+		{
+			if(data == "1")	
+			{ 
+				alert("Operacion realizada correctamente.");
+				//Una vez confirmado el exito de la operacion limpiamos los campos de texto.	
+				$("input[type=text],input[type=password],textarea").attr("value","")
+         	}
+         	else 
+         	{ 
+         		alert("Algo anda mal: # " + data);
+                 
+     		}
+     	})
+
+	} 
+
+// ..........................................................................................................
+ 
+ function changeEvent(evento)
+  {
+    	document.getElementById("isImage").value=evento;
+		
+		if(evento == "video") {
+			$('#enlace').show();
+			$('#imagenEvento').hide();
+		}
+		else {
+			$('#enlace').hide();
+			$('#imagenEvento').show();
+		}
+
+	}
+
+// ..........................................................................................................
+
+ 	function isAlfanumerico(valor)
+	{
+		var estatus = (/^[a-zA-Z0-9 áéíóúAÉÍÓÚÑñ]+$/.test(valor))? true : false;
+		return estatus;
+	}
+
+// ..........................................................................................................
+
+	 function isDate(valor)
+	{
+		 var estatus =  (/^\d{4}-(0?[1-9]|1[012])-(3[01]|0?[1-9]|[12]\d)$/.test(valor))? true : false;
+		 return estatus;	
+	}
+
+// ..........................................................................................................
+	
+	 function isUrl(valor)
+	{
+		var estatus = (/^www\.\w+\.[a-zA-Z]{2,4}(\/?\w+)*$/.test(valor))? true : false;
+		return estatus;		
+	}
+
+//..........................................................................................................
+	function isVacio(valor)
+	{
+		var estatus = false;
+		
+		if(valor.length == 0)
+		{
+			estatus = true;
+
+		}
+	return estatus;
+
+	}
+
+// ..........................................................................................................
+
+function Usuario(task)
+{
+
+	//url = "../PHP_Resources/ToDo.php";
+
+
+	// Obtenemos los datos de los campos de texto
+		usuario = document.getElementById("usr").value;
+		password = document.getElementById("pass").value;
+
+		if(isVacio(usuario)){
+					alert("El nombre de usuario no puede ser un campo vacío");
+					document.getElementById("usr").focus();
+					return;
+				}
+		if(isVacio(password)){
+					alert("La contraseña no puede ser un campo vacío.");
+					document.getElementById("pass").focus();
+					return;
+				}
+
+			document.add_usuario.submit();	
+				//Realizamos la tarea requerida una vez validado que los campos no sean vacio.
+}
+	/*switch(task)
+	{
+		
+		case '0': 
+				//Loggin
+				
+				url = "PHP_Resources/ToDo.php";
+				parametros = "&usr=" + usuario + "&pass=" + password + "&opc=" + 0;
+				//mensaje = "Iniciar sesion";
+
+				task_conection(url,parametros, mensaje);
+				break;
+
+				//-------------------------	
+
+		case '1': 
+				//Agregar suario
+				
+				// Obtener el tipo de usuario
+				//tipo_usuario = document.getElementById("tipo_usr").value;
+
+				//Convertimos caracteres extraños a UTF-8	
+    			usuario = encodeURIComponent(usuario);
+				password = encodeURIComponent(password);
+   
+				//Verificamos que los datos no tengan inconsistencias. 
+				if (isAlfanumerico(usuario) || isVacio(usuario)) 
+					{
+					 alert("El nombre de usuario contiene caracteres no validos o esta vacio."); 
+					 document.getElementById("usr").focus(); 
+					 return;
+					}
+
+				//enviamos lso datos para registro a la BD. Los campos serán validados nuevamente desde el servidor.
+				
+    			//parametros = "&usr=" + usuario + "&pass=" + password + "&tipo_usr=" + tipo_usuario + "&opc=" + 0;
+    			//mensaje = "Usuario agregado con éxito.";
+
+    				document.add_usuario.submit();
+
+				break;    				
+				//-------------------------	
+
+		case '2': 
+				//Eliminar usuario
+
+				mensaje = "Usuario eliminado con éxito.";
+				parametros = "&usr=" + usuario + "&opc=" + 1;
+				break;
+				//----------------------------	
+
+		case '3': 
+				//Modificar usuario
+				
+				mensaje = "Usuario modificado con éxito.";
+				parametros = "&usr=" + usuario + "&pass=" + password + "&tipo_usr=" + tipo_usuario + "&opc=" + 2;
+				break;
+				//----------------------------	
+       }
+	}
+	*/
+// ..........................................................................................................
+
+
+function pelicula(task)
+{          
+	switch(task)
+	{
+		case '1': // Add
+					
+				// Obtenemos el valor de cada campo
+
+				titulo = document.add_pelicula.titulo.value;
+				sinopsis = document.add_pelicula.sinopsis.value;
+				idSede = document.add_pelicula.sede.selectedIndex;
+	  			sede =  document.add_pelicula.sede.options[idSede].value
+	  			fecha = document.add_pelicula.fecha.value;
+	  			hora = document.add_pelicula.hora.value;	
+      			oficial = (document.add_pelicula.oficial.checked) ? 0 : 1;	
+      			categoria = document.add_pelicula.categoria.value;    					
+      			grafico = document.add_pelicula.grafico.value;
+      				
+      		
+      				//  Hacemos las validaciones a cada campo
+      				if( isVacio(titulo) || !isAlfanumerico(titulo) )
+     				 { 
+      					alert("El titulo capturado esta vacio o contiene caracteres no validos.");
+      					document.add_pelicula.titulo.focus(); 
+      					return; 
+      				}
+
+
+      			if(isVacio(sinopsis) || !isAlfanumerico(sinopsis) )
+      			{
+      				alert("La sinopsis capturado es vacio o contiene caracateres no validos.");
+       				document.add_pelicula.sinopsis.focus();
+        			return; 
+       			}
+
+      			if(isVacio(fecha) || !isDate(fecha) )
+      			{
+      				alert("La fecha capturada es vacio o contiene caracateres no validos.");
+       				document.add_pelicula.fecha.focus(); 
+       				return; 
+      			}
+
+      			if(isVacio(hora))
+      			{
+      	 			alert("La hora capturado es vacio o contiene caracateres no validos.");
+      	 			document.add_pelicula.hora.focus(); 
+      	 			return; 
+      	        }
+
+      	      	 if(grafico == "imagen"){
+
+      						if( isVacio(document.add_pelicula.imagenEvento.value))
+      						{
+      							alert("Debe cargar una imagen.");
+      							document.add_pelicula.imagen.focus(); 
+      							return;
+      						}
+
+      				}
+      				else if(grafico == "video"){
+
+      					if( isVacio(document.add_pelicula.enlace.value))
+      						{
+      							alert("No hay una direccion de enlace para el video.");
+      							document.add_pelicula.imagen.focus(); 
+      							return;
+      						}
+      				}	
+      			
+      	        document.add_pelicula.submit();	
+      	        //Enviamos los datos para su ejecucion
+				//parametros = "&sede=" + sede + "&enalce=" + enlace + "&titulo=" + titulo + "&enlace=" + enlace + "&sinopsis="+ sinopsis + "&fecha=" + fecha + "&hora=" + hora + "&oficial" + oficial +  "&opc=1" + "&task=2";
+				//url = "../PHP_Resources/ToDo.php"; 
+
+				//task_conection(url, parametros);	
+		break;
+		//------------------------------
+
+		case '2': // Eliminar
+		break;
+		//------------------------------
+		case '3': // Modificar 
+
+				titulo = document.edit_pelicula.titulo.value;
+				sinopsis = document.edit_pelicula.sinopsis.value;
+				idSede = document.edit_pelicula.sede.selectedIndex;
+	  			sede =  document.edit_pelicula.sede.options[idSede].value
+	  			fecha = document.edit_pelicula.fecha.value;
+	  			hora = document.edit_pelicula.hora.value;	
+      			//oficial = (document.add_pelicula.oficial.checked) ? 0 : 1;	
+      			
+      				
+      			
+      				//  Hacemos las validaciones a cada campo
+      				if( isVacio(titulo) || !isAlfanumerico(titulo) )
+     				 { 
+      					alert("El titulo capturado esta vacio o contiene caracteres no validos.");
+      					document.edit_pelicula.titulo.focus(); 
+      					return; 
+      				}
+
+      			if(isVacio(sinopsis) || !isAlfanumerico(sinopsis) )
+      			{
+      				alert("La sinopsis capturado es vacio o contiene caracateres no validos.");
+       				document.edit_pelicula.sinopsis.focus();
+        			return; 
+       			}
+
+      			if(isVacio(fecha) || !isDate(fecha) )
+      			{
+      				alert("La fecha capturada es vacio o contiene caracateres no validos.");
+       				document.edit_pelicula.fecha.focus(); 
+       				return; 
+      			}
+
+      			if(isVacio(hora))
+      			{
+      	 			alert("La hora capturado es vacio o contiene caracateres no validos.");
+      	 			document.edit_pelicula.hora.focus(); 
+      	 			return; 
+      	        }
+
+      	        document.edit_pelicula.submit();	
+		break;
+		//------------------------------
+	}
+}
+
+// ..........................................................................................................
+
+function tipo_evento(task)
+{
+	switch(task)
+	{
+		case '1': // Add
+	
+ 				nombre =  document.add_tEvento.nombre.value;
+ 				imagen = document.add_tEvento.enlace.value;
+
+ 				if(isVacio(nombre) || !isAlfanumerico(nombre))
+ 					{
+ 						alert("El campo nombre esta vacio o contiene caracteres no validos.")
+ 	 					document.add_tEvento.nombre.focus();
+ 	 					return;
+ 					}
+
+					if(isVacio(imagen))
+ 					{
+ 						alert("El campo URL de imagen esta vacio o contiene caracteres no validos.")
+ 	 					document.add_tEvento.enlace.focus();
+ 	 					return;
+ 					}
+
+ 				//parametros = "&nombre="+nombre + "&enlace="+ enlace + "&opc=1" + "&task=5";
+    			//url = "../PHP_Resources/ToDo.php"; 
+
+    			//task_conection(url, parametros);
+
+    			document.add_tEvento.submit();
+
+		break;
+	  //------------------------
+
+		case 2: // Eliminar
+		break;
+		case 3: // Modificar 
+		break;
+	}
+}
+
+
+// ..........................................................................................................
+
+function evento(task)
+{
+	switch(task)
+	{
+		case '1': // Add
+
+					idSede = document.add_evento.sede.selectedIndex;
+	  				sede = document.add_evento.sede.options[idSede].value;
+
+					nombre = document.add_evento.nombre.value;
+					descripcion = document.add_evento.descripcion.value;
+					fecha =  document.add_evento.fecha.value;
+					hora = document.add_evento.hora.value;
+					grafico =  document.add_evento.grafico.value;
+					enlace =  document.add_evento.enlace.value;
+
+					grafico = document.add_evento.isImage.value;
+
+					if(isVacio(nombre) || !isAlfanumerico(nombre))
+ 					{
+ 						alert("El campo nombre esta vacio o contiene caracteres no validos.")
+ 	 					document.add_evento.nombre.focus();
+ 	 					return;
+ 					}
+
+ 					if(isVacio(descripcion) || !isAlfanumerico(descripcion))
+ 					{
+ 						alert("La descripcion esta vacio o contiene caracteres no validos.")
+ 	 					document.add_evento.descripcion.focus();
+ 	 					return;
+ 					}
+
+ 					if(!isDate(fecha) || isVacio(fecha))
+ 					{
+ 						alert("La fecha esta vacio o contiene caracteres no validos.")
+ 	 					document.add_evento.fecha.focus();
+ 	 					return;
+ 					}
+
+ 					if(isVacio(hora))
+ 					{
+ 						alert("La hora esta vacio o contiene caracteres no validos.")
+ 	 					document.add_evento.hora.focus();
+ 	 					return;
+ 					}
+
+
+ 					if(grafico == "imagen")
+ 					{
+
+      						if( isVacio(document.add_evento.imagenEvento.value))
+      						{
+      							alert("Debe cargar una imagen.");
+      							document.add_evento.imagen.focus(); 
+      							return;
+      						}
+      				}
+      				else if(grafico == "video"){
+
+      					if( isVacio(document.add_evento.enlace.value))
+      						{
+      							alert("No hay una direccion de enlace para el video.");
+      							document.add_evento.enlace.focus(); 
+      							return;
+      						}
+      				}	
+
+ 					//url = "../PHP_Resources/ToDo.php"; 
+ 					//parametros = "&nombre=" + nombre + "&descripcion=" + descripcion + "&sede=" + sede +  "&tEvento=" + categoria_evento +  "&fecha=" + fecha + "&hora=" + hora + "&enlace=" + enlace + "&grafico=" + grafico + "&opc=1" + "&opc=4"  ;
+ 					
+ 					//if(todas las condiciones se cumplieron)
+ 					document.add_evento.submit();
+ 					//task_conection(url, parametros);
+
+
+		break;
+		
+		case '2': // Update
+
+					idSede = document.edit_evento.sede.selectedIndex;
+	  				sede = document.edit_evento.sede.options[idSede].value
+
+	  				idCatEvento = document.edit_evento.tEvento.selectedIndex;
+	  				categoria_evento = document.edit_evento.tEvento.options[idCatEvento].value;
+
+					nombre = document.edit_evento.nombre.value;
+					descripcion = document.edit_evento.descripcion.value;
+					fecha =  document.edit_evento.fecha.value;
+					hora = document.edit_evento.hora.value;
+					
+				
+
+					if(isVacio(nombre) || !isAlfanumerico(nombre))
+ 					{
+ 						alert("El campo nombre esta vacio o contiene caracteres no validos.")
+ 	 					document.edit_evento.nombre.focus();
+ 	 					return;
+ 					}
+
+ 					if(isVacio(descripcion) || !isAlfanumerico(descripcion))
+ 					{
+ 						alert("La descripcion esta vacio o contiene caracteres no validos.")
+ 	 					document.edit_evento.descripcion.focus();
+ 	 					return;
+ 					}
+
+ 					if(!isDate(fecha) || isVacio(fecha))
+ 					{
+ 						alert("La fecha esta vacio o contiene caracteres no validos.")
+ 	 					document.edit_evento.fecha.focus();
+ 	 					return;
+ 					}
+
+ 					if(isVacio(hora))
+ 					{
+ 						alert("La hora esta vacio o contiene caracteres no validos.")
+ 	 					document.edit_evento.hora.focus();
+ 	 					return;
+ 					}
+
+ 					document.edit_evento.submit();
+ 			
+		break;
+	
+	}
+}
+
+// ..........................................................................................................
+
+function sede(task)
+{
+	switch(task)
+	{
+		case '1': // Add
+
+				nombre = document.add_sede.nombre.value;
+				calle = document.add_sede.calle.value;
+				numero = document.add_sede.numero.value;
+				colonia = document.add_sede.colonia.value;
+				cPostal = document.add_sede.cPostal.value;
+				latitud = document.add_sede.latitud.value;
+				longitud = document.add_sede.longitud.value;
+
+
+					if( isVacio(nombre) || !isAlfanumerico(nombre))
+     				 { 
+      					alert("El nombre capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.nombre.focus(); 
+      					return; 
+      				}	
+
+    				 if( isVacio(calle) || !isAlfanumerico(calle))
+     				 { 
+      					alert("El calle capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.calle.focus(); 
+      					return; 
+      				}
+
+      				if( isVacio(numero) || !isAlfanumerico(nombre))
+     				 { 
+      					alert("El nombre capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.numero.focus(); 
+      					return; 
+      				}
+      				if( isVacio(colonia) || !isAlfanumerico(colonia))
+     				 { 
+      					alert("El colonia capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.colonia.focus(); 
+      					return; 
+      				}
+      				if( isVacio(cPostal) || !isAlfanumerico(nombre))
+     				 { 
+      					alert("El cPostal capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.cPostal.focus(); 
+      					return; 
+      				}
+      				
+      				if( isVacio(latitud))
+     				 { 
+      					alert("El nombre capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.nombre.focus(); 
+      					return; 
+      				}
+      				if( isVacio(longitud))
+     				 { 
+      					alert("El nombre capturado esta vacio o contiene caracateres no validos.");
+      					document.add_sede.nombre.focus(); 
+      					return; 
+      				}
+
+      				 punto_interes = (document.add_sede.punto_interes.checked) ? 0 : 1;
+
+      	    	     //parametros = "&nombre="+nombre + "&calle=" + calle +"&numero=" + numero + "&colonia=" + colonia + "&cPostal=" +cPostal + "&latitud="+latitud + "&longitud="+longitud + "&punto_interes="+punto_interes + "&opc=1" + "&task=3";
+     				 //url = "../PHP_Resources/ToDo.php"; 
+
+     				 document.add_sede.submit();
+
+     				 //task_conection(url, parametros);
+		break;
+		case '2': // Eliminar
+		break;
+		case '3': // Modificar 
+		break;
+	}
+}
+
+// ..........................................................................................................
+
+function informacion(task)
+{
+	switch(task)
+	{
+		case '1': // Add
+		break;
+		case '2': // Eliminar
+		break;
+		case '3': // Modificar 
+		break;
+	}
+}
+// ..........................................................................................................
+
+
+	
+
+
+
+

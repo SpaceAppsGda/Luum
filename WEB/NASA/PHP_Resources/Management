@@ -1,0 +1,80 @@
+<?Php
+
+Class Management
+{
+
+//Propreties
+
+var $name;
+var $active;
+	
+}
+
+function addMetal
+{
+
+}
+
+function deleteMetal
+{
+	
+}
+
+function addHumidity
+{
+
+}
+
+function deleteHumidity
+{
+	
+}
+function addAuditing
+{
+
+}
+
+function deleteAuditing
+{
+	
+}
+function addTypePrize
+{
+
+}
+
+function deleteTypePrize
+{
+	
+}
+
+function addPrefix
+{
+
+}
+
+function deletePrefix
+{
+	
+}
+function addTeam
+{
+
+}
+
+function deleteTeam
+{
+	
+}
+function addRole
+{
+
+}
+
+function deleteRole
+{
+	
+}
+
+
+?>

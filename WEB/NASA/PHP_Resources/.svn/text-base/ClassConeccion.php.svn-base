@@ -1,0 +1,33 @@
+<?php
+Class Conection
+{
+	
+	var $conectarBD;
+	var $selecBD;
+
+	//Connecting and selecting a Database
+	Function conectar()
+	{
+	
+		$conectarBD = mysql_connect("72.167.44.88","ficg28", "Chacarron19#");
+
+  		if(!$conectarBD)
+		{
+  	  		die('Could not connect: '. mysql_error());
+  	  		return;
+		}
+
+
+		$selecBD = mysql_select_db("ficg28", $conectarBD);
+	
+	
+		if(!$selecBD)
+		{
+	  		die('Could not select bd: '. mysql_error());
+	  		return;
+		}
+			//echo 'Connected and selected BD successfully';			
+}
+
+}	
+?>

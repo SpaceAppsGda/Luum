@@ -1,0 +1,80 @@
+<?php 
+
+
+Class Sede
+{
+	var $sNombre;
+	var $sCalle;
+	var $sNumero;
+	var $sColonia;
+	var $sCP;
+	var $bIsSede;
+	var $dLongitud;
+	var $dLatitud;
+
+	Function addSede()
+	{
+		
+
+		$query = "INSERT INTO sede(nombre, calle, numero, colonia, cPostal, isSede, longitud, latitud) 
+		VALUES('$this->sNombre', '$this->sCalle', '$this->sNumero', '$this->sColonia', '$this->sCP', '$this->bIsSede', '$this->dLongitud', '$this->dLatitud')";
+
+		try
+		{
+			if($sql = mysql_query($query))
+			{
+				echo "Se agrego la sede a la Base de Datos";
+			}
+			else
+			{
+				echo "[ERROR]:",mysql_error();
+			}
+		}
+		catch(Exception $e)
+		{
+			echo "[ERROR]:".$e->getMessage();
+		}
+
+	}
+
+	//..............................................................................................................................................
+
+	Function updateSede($iIdSede)
+	{
+	
+
+	    $query = "UPDATE sede SET nombre = '$this->sNombre', calle = '$this->sCalle', numero = '$this->sNumero',";
+	    $query += "colonia = '$this->sColonia', cPostal = '$this->sCP', isSede = 'this->bIsSede', longitud = '$this->dLongitud', latitud = '$this->dLongitug'";
+	    $query += "WHERE '$iIdSede' == idSede";
+
+	    try
+	    {
+	    	mysql_query($query);
+	    }  
+	    catch(Exception $e)
+	    {
+	    	echo "[ERROR]:".$e->getMessage();
+	    }
+	}
+
+	//..............................................................................................................................................
+
+	Function deleteSede($iIdSede)
+	{
+	
+
+		$query = "DELETE FROM sede WHERE idSede == 'iIdSede'";
+
+		try
+		{
+			mysql_query($query);
+		}
+		catch(Exception $e)
+		{
+			echo "[ERROR]:".$e->getMessage();
+		}
+
+	}
+}
+
+?>

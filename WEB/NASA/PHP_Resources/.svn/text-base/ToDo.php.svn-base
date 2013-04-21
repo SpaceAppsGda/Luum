@@ -1,0 +1,392 @@
+<?php
+    require_once("files.class.php");
+    
+	//Object connection
+    $conexion = new Conection();
+	$conexion->conectar();
+	
+	$opc = $_REQUEST['opc'];
+    $task = $_REQUEST['task'];
+
+
+	if(!$conexion)
+	{
+		echo "[ERROR] Not conection".mysql_error();
+	}
+	
+ 
+
+
+switch($opc)
+{
+	case 0: // Loggin
+			
+			$usuario = $_POST['usr'];
+			$password = $_POST['pass'];
+				
+			$sql = mysql_query("SELECT alias, password FROM usuario WHERE alias ='$usuario' AND password = md5($password)");
+			$rows = mysql_num_rows($sql);
+
+			if($rows > 0)
+			{
+				//No existe usuario o contraseña incorrecta.
+				echo "1";
+			}
+			else{
+				echo "No existe usuario o contraseña incorrecta.";
+			}
+
+			//exito		
+
+					//Iniciar sesion e ir a menu principal.
+
+			break;
+
+	case 1: 
+
+			// Agregar
+
+			
+				switch($task) // Agregar
+				{
+					case 1: //Usuario
+
+					break;
+					// -----------------------
+
+					case 2: //Pelicula 
+					
+
+							$titulo = $_POST['titulo'];
+							$sinopsis = $_POST['sinopsis'];
+							$iSede = $_POST['iSede'];
+							$fecha = $_POST['fecha'];
+							$hora = $_POST['hora'];
+							$oficial = $_POST['oficial'];
+							$categoria = $_POST['categoria'];
+							$grafico = $_POST['grafico'];
+							$enlace = $_POST['enlace'];	
+							$isImage = $_POST['isImage'];
+							
+							$imagen = $_FILES['imagenEvento']['tmp_name'];	
+
+
+							if($isImage == "imagen") 
+								{
+									require_once("files.class.php");
+									
+									if (is_uploaded_file($_FILES['imagenEvento']['tmp_name']))
+									{
+										echo " SE CARGO EL ARCHIVO";
+									}
+									else{
+										echo "NO MAMES NO SIRVE";
+									}
+
+					
+									$enlace = "";
+									$cuerpo = "";
+    								$fupload = new Upload();
+									$fupload->setMaxSize('5000');
+    								$fupload->setPath("../imagenes/peliculas");
+    								$fupload->setFile('imagenEvento'); 
+    								$fupload->save();
+										
+										if ($fupload->isupload) 
+										{
+											$cuerpo = $fupload->cuerpo;
+
+											$query = "INSERT INTO pelicula(iSede, titulo, enlace, isImage, fecha, hora, sinopsis, categoria, isOficial) VALUES('$idSede', '$titulo', '$enlace', '$grafico', '$fecha', '$hora', '$sinopsis', '$categoria', '$oficial')";
+											$sql = mysql_query($query);
+
+											if($sql)
+												{ 
+													echo "bien";
+												}
+												  else
+												{ 
+													echo "Invalid query".mysql_error();
+												}
+										}
+										else
+										{ 
+											echo $fupload->message;
+										}
+								}
+
+									  
+					    break;
+					// -----------------------
+
+					case 3: //Sede
+
+							$nombre = $_POST['nombre'];
+							$calle = $_POST['calle'];
+							$numero = $_POST['numero'];
+							$colonia = $_POST['colonia'];
+							$cPostal = $_POST['cPostal'];
+							$pInteres = $_POST['punto_interes'];
+							$longitud = $_POST['longitud'];
+							$latitud = $_POST['latitud'];
+							
+							$query = "INSERT INTO sede(nombre, calle, numero, colonia, cPostal, isSede, longitud, latitud) VALUES('$nombre','$calle', '$numero', '$colonia', 'cPostal', '$pInteres', '$longitud', '$latitud')";
+
+							$sql = mysql_query($query);
+
+							if($sql){ echo "1";}
+							else{ echo "Invalid query:".mysql_error();}
+
+					break;
+					// -----------------------
+
+					case 4: //Evento 
+
+						 $nombre = $_POST['nombre'];
+						 $enlace = $_POST['enlace'];
+						 $grafico = $_POST['grafico'];
+						 $fecha = $_POST['fecha'];
+						 $hora = $_POST['hora'];
+						 $sede = $_POST['sede'];
+						 $descripcion = $_POST['descripcion'];
+						 $tipo_evento = $_POST['tEvento'];
+
+						 $query = "INSERT INTO evento(nombre, enlace, isImage, fecha, hora, iSede, descripcion, idCatEvento)VALUES('$nombre', '$enlace', '$grafico', '$fecha','$hora','$sede', $'descripcion', '$tipo_evento')";
+
+						 $sql = mysql_query($query);
+
+						if($sql){ echo "1"; }
+						else{ echo"Invalid query:" .mysql_error(); } 
+
+					break;
+					// -----------------------
+
+					case 5: //Tipo de evento
+
+							$nombre = $_POST['nombre'];
+							$enlace = $_POST['enlace'];
+				
+							$query = "INSERT INTO tipo_evento(nombre, imagen) VALUES('$nombre', $'enlace')";
+
+							$sql = mysql_query($query);
+
+							if($sql){ echo "1"; }
+							else{ echo"Invalid query:" .mysql_error(); } 
+
+					break;
+					// -----------------------
+
+					case 6: //Informacion
+					break;
+					// -----------------------
+				}
+
+	break; // fin brake case 1	Agregar entidades		
+//.........................................................................................................................
+	case 2: 
+
+			// Eliminar
+
+				switch($task)
+				{
+					case 1: //Usuario
+					break;
+
+					case 2: //Pelicula
+					break;
+
+					case 3: //Sede
+					break;
+
+					case 4: //Evento 
+					break;
+
+					case 5: //Tipo de evento
+					break;
+
+					case 6: //Informacion
+					break;
+				}
+
+	break;// fin brake case 2 eliminar entidades
+//.........................................................................................................................
+
+	case 3: 
+
+			// Modificar
+
+				switch($task)
+				{
+					case 1: //Usuario
+					break;
+
+					case 2: //Pelicula
+					break;
+
+					case 3: //Sede
+					break;
+
+					case 4: //Evento 
+					break;
+
+					case 5: //Tipo de evento
+					break;
+
+					case 6: //Informacion
+					break;
+				}
+
+
+	break; // fin brake case 3 modificar entidades
+	//.........................................................................................................................
+
+
+
+
+}
+
+
+// Seleccionamos el item
+
+/*	switch($opc)
+	{
+		//Usuarios
+		case 0:
+		{
+			$usuario = $_POST['usr'];
+			$password = $_POST['pass'];
+			$tipo_usuario = $_POST['tipo_usr'];
+
+				// Validamos que el nombre de usuario no exista en la BD.
+				$sql = sprintf("SELECT count(alias) as cant FROM usuario WHERE alias='%s'",
+				
+				mysql_real_escape_string($usuario));
+
+				$existeAlias = mysql_query($sql);
+				
+				$row = mysql_fetch_array($existeAlias);
+			
+				if($row["cant"] > 0) 
+				{ 
+					echo "2"; 
+					break; 
+				}
+
+			//Realizamos el registro.	
+			$insert = mysql_query("INSERT INTO usuario(alias, password, level) VALUES('$usuario', md5('$password'),'$tipo_usuario')");
+
+			if(!$insert)
+			{
+				echo "Invalid query".mysql_error();
+			}
+		
+	 	echo "1";
+		break;	
+		}
+
+		//Peliculas
+		case 1:
+		{
+			$titulo = $_POST['titulo'];
+			$director = $_POST['director'];
+			$paises = $_POST['paises'];
+			$anio = $_POST['anio'];
+			$sinopsis = $_POST['sinopsis'];
+			$tiempo = $_POST['tiempo'];
+			$tipo = $_POST['tipo'];
+			$formato = $_POST['formato'];
+		//-----------------------------------------------------
+			$tmp_name = $_FILES["imagen"]["tmp_name"];	
+			//print_r($_FILES["imagen"]["tmp_name"]);	
+			$fp = fopen($tmp_name, "rw");
+        	$imagen = fread($fp, filesize($tmp_name));
+            fclose($fp);
+		//--------------------------------------------------	
+			$invitado = $_POST['invitado'];		
+			 
+			$insert = mysql_query("INSERT INTO peliculas(titulo, director, paises, anio, sinopsis, tiempo, tipo, color, imagen, invitado) VALUES('$titulo','$director','$paises','$anio', '$sinopsis', '$tiempo', '$tipo', '$formato', '".mysql_real_escape_string($imagen)."', '$invitado')");
+
+			if(!$insert)
+			{
+				echo "Invalid query".mysql_error();
+			}
+		
+	 	echo"Add movie!";
+		break;				
+		}
+		
+		//Sedes
+		case 2:
+		{
+			$nombre = $_POST['nombre'];
+			$domicilio = $_POST['domicilio'];
+			$latitud = $_POS['latitud'];
+			$longitud = $_POS['longitud'];			
+			$imagen = $_POST['imagen'];
+		
+			$insert = mysql_query("INSERT INTO sedes(nombre, domicilio, latitud, longitud, imagen)VALUES('$nombre', '$domicilio', '$latitud', '$longitud', '$imagen')");
+			
+			if(!$insert)
+			{
+				echo "Invalid query".mysql_error();
+			}
+		
+			echo "Add Sede!";
+			break;	
+		}
+		
+		//Jurado
+		case 3:
+		{
+			$nombre = $_POST['nombre'];
+			$nacionalidad =  $_POST['nacionalidad'];
+			$ocupacion = $_POST['ocupacion'];
+			$trayectoria = $_POST['trayectoria'];
+			$fotografia = $_POST['fotografia'];
+			
+			$insert = mysql_query("INSERT INTO jurado(nombre, pais, ocupacion, trayectoria, imagen)VALUES('$nombre', '$nacionalidad', '$ocupacion', '$trayectoria', '$fotografia')");
+			
+
+	
+			if(!$insert)
+			{
+				echo "Invalid query".mysql_error();
+			}
+			
+			echo "Add jurado!";
+			break;
+		}	
+  	
+		//Notices
+		case 4:
+		{
+			$titulo = $_POST['titulo'];
+			$subtitulo = $_POST['subtitulo'];
+			$fecha = $_POST['fecha'];
+			$hora = $_POST['hora'];
+			$contenido = $_POST['contenido'];
+			$imagen = $_POST['imagen'];
+		
+			$insert = mysql_query("INSERT INTO noticias(titulo, subtitulo, fecha, hora, contenido, imagen)VALUES('$titulo', '$subtitulo', '$fecha', '$hora', '$contenido', '$imagen')");	
+			
+			if(!$insert)
+			{
+				echo "Invalid query".mysql_error();
+			}
+		echo "Add noticias!";
+		break;
+		}	
+		
+	}
+			  	
+
+*/
+
+//$sede_Values = "nombre,calle,numero,colonia,cPostal, isSede, longitud, latitud;
+//$evento_Values = "nombre,enlace,isImage,fecha, hora, isSede, descripcion, idCatEvento";
+//$//cat_evento = "nombre, imagen";
+//$pelicula_values = "idSede, titulo, enlace, isImage, fecha, hora, sinopsis, categoria, isOficial";
+//$informacion_values = "titulo, imagen, detalle"; 
+//$usuario_values = "alias, password, level";
+	
+
+?>

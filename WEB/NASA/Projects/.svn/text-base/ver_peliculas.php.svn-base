@@ -1,0 +1,59 @@
+
+	
+			
+				<table>
+					<tr>
+						<th>Titulo</th>
+						<th>Sinopsis</th>
+						<th>Sede</th>
+						<th>Fecha</th>
+						<th>Hora</th>
+						<th>Pelicula oficial</th>
+						<th>Enlace del grafico</th>
+						<td><a href="?section=peliculas&op=add">Agregar una pelicula</a></td>
+					</tr>
+					<?php
+
+						// Hacer conexion con la BD.
+							$conexion =  new Conection(); 
+							$conexion->conectar();
+
+							//$query = "SELECT * FROM pelicula";
+
+
+							$query = "SELECT idPelicula, titulo, sinopsis, sede.nombre, fecha, hora, isOficial, enlace,
+				CASE isOficial 
+				WHEN 1 THEN 'SI'
+				WHEN 0 THEN 'NO' 
+				END
+				FROM pelicula, sede 
+				ORDER BY  titulo";
+
+							$sql = mysql_query($query); 
+
+							if($sql)
+							{
+								while($row = mysql_fetch_array($sql))
+									{
+										extract($row);
+										echo "
+											<tr>
+											<td>$titulo</td>
+											<td>$sinopsis</td>
+											<td>$nombre</td>
+											<td>$fecha</td>  
+											<td>$hora</td>
+											<td>$CASEisOficial</td>
+											<td>$enlace</td>
+											<td><a href=\"?section=peliculas&op=edit&id=$idPelicula\">Modificar</a></td>
+											<td><a href=\"?section=peliculas&op=delete&id=$idPelicula&updating=true\">Eliminar</a></td>
+											</tr>
+											";	
+									}
+							}
+
+
+ 					?>
+
+ 				</table>
+		

@@ -1,0 +1,142 @@
+<div class="listado">
+
+
+<?php
+if($panel == TRUE) {
+extract($_REQUEST);
+}
+
+if($detalle != "true") {
+	?>
+<table>
+	<thead>
+		<th>Nombre</th>
+		<th>RFC</th>
+		<th>Email</th>
+		<th>Teléfono</th>
+		<th>Extensión</th>
+		<th>Detalles</th>
+	</thead>
+	<?PHP
+require_once("system/conx.php");
+	$q = "Select * From registro WHERE id_acces = '$id_acces'";
+	if($x = mysql_query($q) or die(mysql_error())) {
+			while($row = mysql_fetch_assoc($x)) {			
+				echo "<tr>";
+				echo "<td>" . $row['nombre'] . "</td>";
+				echo "<td>" . $row['rfc'] . "</td>";
+				echo "<td>" . $row['email'] . "</td>";
+				$id_acces = $row["id_acces"];
+				echo "<td>" . $row["telefono"] . "</td>";
+				echo "<td>" . $row['extension'] . "</td>";
+				echo "<td><a href=\"index.php?panel=true&content=adfactura&id_acces=$id_acces&detalle=true\">Detalle</a></td></form></tr>";
+			}
+	}
+}
+else {
+	require_once("system/conx.php");
+	?>
+	<div class="detallesclientes" style="margin-left:170px">
+	<table>
+	<?PHP
+	$q = "Select * From registro WHERE id_acces = '$id_acces'";
+	if($x = mysql_query($q) or die(mysql_error())) {
+			while($row = mysql_fetch_assoc($x)) {			
+				echo "<tr><td>Nombre: </td>";
+				echo "<td>" . $row['nombre'] . "</td>";
+				echo "<tr><td>RFC:</td><td>" . $row['rfc'] . "</td></tr>";
+				echo "<tr><td>Email:</td><td>" . $row['email'] . "</td></tr>";
+				$id_acces = $row["id_acces"];
+				echo "<tr><td>Telefono:</td><td>" . $row['telefono'] . "</td></tr>";
+				echo "<tr><td>Extensión:</td><td>" . $row['extension'] . "</td></tr>";
+			}
+	}
+}
+$uploading = $_GET["uploading"];
+if($uploading == "true") {
+	echo "ja";
+
+
+if($isimage == "imagen") 
+{
+	require_once("admonpanel/system/files.class.php");
+	
+	$cuerpo = "";
+    $fupload = new Upload();
+	$fupload->setMaxSize('5000');
+    $fupload->setPath("facturas");
+    $fupload->setFile("file"); 
+    $fupload->save();
+	if ($fupload->isupload != false) {
+	$cuerpo = $fupload->cuerpo;
+
+							$idSede = $_POST['idSede'];
+							$titulo = $_POST['titulo'];
+							$enlace = $_POST['enlace'];
+							$grafico = $_POST['grafico'];
+							$fecha = $_POST['fecha'];
+							$hora = $_POST['hora'];
+							$sinopsis = $_POST['sinopsis'];
+							$categoria = $_POST['categoria'];
+							$oficial = $_POST['oficial'];
+
+							$query = "INSERT INTO pelicula(iSede, titulo, enlace, isImage, fecha, hora, sinopsis, categoria, isOficial)VALUES('$idSede', '$titulo', '$enlace', '$grafico', '$fecha', '$hora', '$sinopsis', '$categoria', '$oficial')";
+							$sql = mysql_query($query);
+
+							if($sql)
+								{ echo "1"; }
+							else
+								{ echo "Invalid query".mysql_error();}
+	}
+	else {
+		echo "No se pudo agregar el registro, inténtalo de nuevo" . $fupload->message;
+	}
+}
+else {
+	$idSede = $_POST['idSede'];
+							$titulo = $_POST['titulo'];
+							$enlace = $_POST['enlace'];
+							$grafico = $_POST['grafico'];
+							$fecha = $_POST['fecha'];
+							$hora = $_POST['hora'];
+							$sinopsis = $_POST['sinopsis'];
+							$categoria = $_POST['categoria'];
+							$oficial = $_POST['oficial'];
+
+							$query = "INSERT INTO pelicula(iSede, titulo, enlace, isImage, fecha, hora, sinopsis, categoria, isOficial)VALUES('$idSede', '$titulo', '$enlace', '$grafico', '$fecha', '$hora', '$sinopsis', '$categoria', '$oficial')";
+							$sql = mysql_query($query);
+
+							if($sql) {
+								echo "Se agregó correctamente el evento";
+							}
+}
+// 	if ($cuerpo != "") {
+// 		$tipo = $_FILES["file"]['type'];
+// 		$desc = $_POST['desc'];
+// 		$fecha = date("y/m/d", time());
+// $queryupdate = "INSERT INTO files (directorio,descripcion,Fecha,tipo) VALUES ('$cuerpo','$desc','$fecha','$tipo')";
+// $guardado = mysql_query($queryupdate);
+	}
+
+// else { echo "Debe seleccionar primero un archivo para subir"; header ("Location: ?id=files&subid=cfiles"); } 
+?>
+</div>
+
+</table>
+</div>
+
+<form style="margin-top:40px;" action="?panel=true&content=adfactura&uploading=true" method="post" enctype="multipart/form-data">
+  <td class="archivos">
+  
+  <input name="file" type="file" size="35" /><br><br>
+  Agregue una pequeña descripción para el archivo: <br>
+  <i> ej. "Factura Maravedis"</i><br>
+  <input name="desc" type="text" style=" width:250; height: 20; "><br><br>
+  <input name="enviar" type="submit" value="Subir" />
+  <input name="action" type="hidden" value="upload" />     
+</form>
+
+
+
+
+

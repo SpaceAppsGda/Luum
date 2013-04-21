@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources
+END
+ClassInformacion.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ClassInformacion.php
+END
+upfactura.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/upfactura.php
+END
+ClassTipoEvento
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ClassTipoEvento
+END
+ClassUsuario.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ClassUsuario.php
+END
+ClassTipoEvento.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ClassTipoEvento.php
+END
+ClassPelicula.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/ficg28_codigo/!svn/ver/3/trunk/ficg28_web/PHP_Resources/ClassPelicula.php
+END
+ToDo.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ToDo.php
+END
+ClassConeccion.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ClassConeccion.php
+END
+ClassEvento.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ficg28_codigo/!svn/ver/3/trunk/ficg28_web/PHP_Resources/ClassEvento.php
+END
+ClassSede.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/ClassSede.php
+END
+controlador.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/controlador.php
+END
+files.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/ficg28_codigo/!svn/ver/2/trunk/ficg28_web/PHP_Resources/files.class.php
+END

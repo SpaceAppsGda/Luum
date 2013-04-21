@@ -1,0 +1,75 @@
+<?php
+Class Usuario
+	{
+		var $sNombre;
+		var $sPass;
+		var $iLevel;
+
+
+		Function addUsuario()
+		{
+
+
+			$query =  "INSERT INTO usuario(alias, password, level)VALUES('$this->sNombre', '$this->sPass', '$this->iLevel')";
+
+			try
+			{
+				if($sql = mysql_query($query))
+				{
+					echo "Se agrego el usuario a la Base de Datos";
+				}
+				else
+				{
+					echo"[ERROR]:".mysql_error();
+				}
+			}
+			catch(Exception $e)
+			{
+				echo "[ERROR]:".$e->getMessage();
+			}
+				
+		}
+
+		//..............................................................................................................................................
+	
+		Function updateUsuario($iIdUsuario)
+		{
+
+			$query = "UPDATE usuario SET alias = '$this->sNombre', password = '$this->password', level = '$this->iNivel'  WHERE iIdUsuario == idUsuario";
+
+			try
+			{
+				mysql_query($query);
+			}
+			catch(Exception $e)
+			{
+				echo "[ERROR]:".$e->getMessage();
+			}
+		}
+
+		//..............................................................................................................................................
+	
+
+		Function deleteUsuario($iIdUsuario)
+		{
+
+
+			$query = "DELETE usuario WHERE 'iIdUsuario' == idUsuario";
+
+			try
+			{
+				mysql_query($query);
+			}
+			catch(Exception $e)
+			{
+				echo  "[ERROR]:".$e->getMessage();
+			}
+
+		}
+
+		//..............................................................................................................................................
+
+
+	}
+
+?>

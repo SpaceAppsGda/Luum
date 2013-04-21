@@ -1,0 +1,14 @@
+<?PHP
+extract($_REQUEST);
+
+$ObjPelicula = New Pelicula();
+$peliculaArray = $ObjPelicula->getPelicula($id);
+extract($peliculaArray);
+
+if(isset($updating)) 	
+{
+	$pelicula->deletePelicula($idPelicula, $titulo);	
+}
+
+?>
+
