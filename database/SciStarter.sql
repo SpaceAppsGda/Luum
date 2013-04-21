@@ -2,14 +2,14 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `SciStarter` ;
-CREATE SCHEMA IF NOT EXISTS `SciStarter` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `SciStarter` ;
+DROP SCHEMA IF EXISTS `cryptota_luum` ;
+CREATE SCHEMA IF NOT EXISTS `cryptota_luum` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `cryptota_luum` ;
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`team`
+-- Table `cryptota_luum`.`team`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`team` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`team` (
   `id` INT NOT NULL ,
   `name` VARCHAR(100) NULL ,
   `activo` TINYINT(1) NULL DEFAULT 1 ,
@@ -19,9 +19,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`prefix`
+-- Table `cryptota_luum`.`prefix`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`prefix` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`prefix` (
   `id` INT NOT NULL ,
   `name` VARCHAR(45) NULL ,
   `active` TINYINT(1) NULL DEFAULT 1 ,
@@ -32,9 +32,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`roles`
+-- Table `cryptota_luum`.`roles`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`roles` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`roles` (
   `id` INT NOT NULL ,
   `name` VARCHAR(45) NULL ,
   `active` TINYINT(1) NULL ,
@@ -44,9 +44,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`persons`
+-- Table `cryptota_luum`.`persons`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`persons` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`persons` (
   `id` INT NOT NULL ,
   `firstname` VARCHAR(100) NULL ,
   `lastname` VARCHAR(100) NULL ,
@@ -65,26 +65,26 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`persons` (
   INDEX `fk_persons_roles1_idx` (`roles_id` ASC) ,
   CONSTRAINT `fk_persons_team1`
     FOREIGN KEY (`team_id` )
-    REFERENCES `SciStarter`.`team` (`id` )
+    REFERENCES `cryptota_luum`.`team` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_persons_saludations1`
     FOREIGN KEY (`saludations_id` )
-    REFERENCES `SciStarter`.`prefix` (`id` )
+    REFERENCES `cryptota_luum`.`prefix` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_persons_roles1`
     FOREIGN KEY (`roles_id` )
-    REFERENCES `SciStarter`.`roles` (`id` )
+    REFERENCES `cryptota_luum`.`roles` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`grant`
+-- Table `cryptota_luum`.`grant`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`grant` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`grant` (
   `id` INT NOT NULL ,
   `login` VARCHAR(45) NULL ,
   `password` VARCHAR(45) NULL ,
@@ -97,16 +97,16 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`grant` (
   INDEX `fk_grant_persons_idx` (`persons_id` ASC) ,
   CONSTRAINT `fk_grant_persons`
     FOREIGN KEY (`persons_id` )
-    REFERENCES `SciStarter`.`persons` (`id` )
+    REFERENCES `cryptota_luum`.`persons` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`metals`
+-- Table `cryptota_luum`.`metals`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`metals` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`metals` (
   `id` INT NOT NULL ,
   `name` VARCHAR(50) NULL ,
   `active` TINYINT(1) NULL DEFAULT 1 ,
@@ -116,9 +116,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`humitidies`
+-- Table `cryptota_luum`.`humitidies`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`humitidies` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`humitidies` (
   `id` INT NOT NULL ,
   `name` VARCHAR(50) NULL ,
   `active` TINYINT(1) NULL DEFAULT 1 ,
@@ -128,9 +128,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`auditing`
+-- Table `cryptota_luum`.`auditing`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`auditing` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`auditing` (
   `id` INT NOT NULL ,
   `name` VARCHAR(100) NULL ,
   `active` TINYINT(1) NULL DEFAULT 1 ,
@@ -140,12 +140,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`status_projects`
+-- Table `cryptota_luum`.`status_projects`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`status_projects` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`status_projects` (
   `id` INT NOT NULL ,
   ` created_at` TIMESTAMP NULL DEFAULT now() ,
-  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ,
+  `updated_at` TIMESTAMP NULL  ,
   `auditing_id` INT NOT NULL ,
   `persons_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -153,21 +153,21 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`status_projects` (
   INDEX `fk_status_projects_persons1_idx` (`persons_id` ASC) ,
   CONSTRAINT `fk_status_projects_auditing1`
     FOREIGN KEY (`auditing_id` )
-    REFERENCES `SciStarter`.`auditing` (`id` )
+    REFERENCES `cryptota_luum`.`auditing` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_status_projects_persons1`
     FOREIGN KEY (`persons_id` )
-    REFERENCES `SciStarter`.`persons` (`id` )
+    REFERENCES `cryptota_luum`.`persons` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`projects`
+-- Table `cryptota_luum`.`projects`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`projects` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`projects` (
   `id` INT NOT NULL ,
   `name` VARCHAR(150) NULL ,
   `photo01` VARCHAR(150) NULL ,
@@ -190,26 +190,26 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`projects` (
   INDEX `fk_projects_status_projects1_idx` (`status_projects_id` ASC) ,
   CONSTRAINT `fk_projects_metals1`
     FOREIGN KEY (`metals_id` )
-    REFERENCES `SciStarter`.`metals` (`id` )
+    REFERENCES `cryptota_luum`.`metals` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_projects_humities1`
     FOREIGN KEY (`humities_id` )
-    REFERENCES `SciStarter`.`humitidies` (`id` )
+    REFERENCES `cryptota_luum`.`humitidies` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_projects_status_projects1`
     FOREIGN KEY (`status_projects_id` )
-    REFERENCES `SciStarter`.`status_projects` (`id` )
+    REFERENCES `cryptota_luum`.`status_projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`notification`
+-- Table `cryptota_luum`.`notification`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`notification` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`notification` (
   `id` INT NOT NULL ,
   `message` TEXT NULL ,
   `typeofservice` TINYINT NULL ,
@@ -219,16 +219,16 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`notification` (
   INDEX `fk_notification_status_projects1_idx` (`status_projects_id` ASC) ,
   CONSTRAINT `fk_notification_status_projects1`
     FOREIGN KEY (`status_projects_id` )
-    REFERENCES `SciStarter`.`status_projects` (`id` )
+    REFERENCES `cryptota_luum`.`status_projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`tests`
+-- Table `cryptota_luum`.`tests`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`tests` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`tests` (
   `id` INT NOT NULL ,
   `name` VARCHAR(100) NULL ,
   `typeofdata` TINYINT NULL ,
@@ -238,9 +238,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`typeprices`
+-- Table `cryptota_luum`.`typeprices`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`typeprices` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`typeprices` (
   `id` INT NOT NULL ,
   `name` VARCHAR(45) NULL ,
   `active` TINYINT(1) NULL DEFAULT 1 ,
@@ -250,9 +250,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`prizes`
+-- Table `cryptota_luum`.`prizes`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`prizes` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`prizes` (
   `id` INT NOT NULL ,
   `description` TEXT NULL ,
   `award_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -263,21 +263,21 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`prizes` (
   INDEX `fk_prizes_projects1_idx` (`projects_id` ASC) ,
   CONSTRAINT `fk_prizes_typeprices1`
     FOREIGN KEY (`typeprices_id` )
-    REFERENCES `SciStarter`.`typeprices` (`id` )
+    REFERENCES `cryptota_luum`.`typeprices` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_prizes_projects1`
     FOREIGN KEY (`projects_id` )
-    REFERENCES `SciStarter`.`projects` (`id` )
+    REFERENCES `cryptota_luum`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`raiting`
+-- Table `cryptota_luum`.`raiting`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`raiting` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`raiting` (
   `id` INT NOT NULL ,
   `value` TINYINT NULL DEFAULT 0 ,
   `active` TINYINT(1) NULL DEFAULT 1 ,
@@ -287,9 +287,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `SciStarter`.`commentaries`
+-- Table `cryptota_luum`.`commentaries`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `SciStarter`.`commentaries` (
+CREATE  TABLE IF NOT EXISTS `cryptota_luum`.`commentaries` (
   `id` INT NOT NULL ,
   `commentary` TEXT NULL ,
   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -302,22 +302,22 @@ CREATE  TABLE IF NOT EXISTS `SciStarter`.`commentaries` (
   INDEX `fk_commentaries_raiting1_idx` (`raiting_id` ASC) ,
   CONSTRAINT `fk_commentaries_projects1`
     FOREIGN KEY (`projects_id` )
-    REFERENCES `SciStarter`.`projects` (`id` )
+    REFERENCES `cryptota_luum`.`projects` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_commentaries_persons1`
     FOREIGN KEY (`persons_id` )
-    REFERENCES `SciStarter`.`persons` (`id` )
+    REFERENCES `cryptota_luum`.`persons` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_commentaries_raiting1`
     FOREIGN KEY (`raiting_id` )
-    REFERENCES `SciStarter`.`raiting` (`id` )
+    REFERENCES `cryptota_luum`.`raiting` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-USE `SciStarter` ;
+USE `cryptota_luum` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -325,103 +325,103 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`team`
+-- Data for table `cryptota_luum`.`team`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`team` (`id`, `name`, `activo`) VALUES (1, 'public', 1);
-INSERT INTO `SciStarter`.`team` (`id`, `name`, `activo`) VALUES (2, 'nasa 001', 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`team` (`id`, `name`, `activo`) VALUES (1, 'public', 1);
+INSERT INTO `cryptota_luum`.`team` (`id`, `name`, `activo`) VALUES (2, 'nasa 001', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`prefix`
+-- Data for table `cryptota_luum`.`prefix`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (1, 'Jr', 1, NULL);
-INSERT INTO `SciStarter`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (2, 'Mr', 1, NULL);
-INSERT INTO `SciStarter`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (3, 'Mrs', 1, NULL);
-INSERT INTO `SciStarter`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (4, 'PhD', 1, NULL);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (1, 'Jr', 1, NULL);
+INSERT INTO `cryptota_luum`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (2, 'Mr', 1, NULL);
+INSERT INTO `cryptota_luum`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (3, 'Mrs', 1, NULL);
+INSERT INTO `cryptota_luum`.`prefix` (`id`, `name`, `active`, `created_at`) VALUES (4, 'PhD', 1, NULL);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`roles`
+-- Data for table `cryptota_luum`.`roles`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (1, 'Public', 1);
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (2, 'Student', 1);
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (3, 'Professor', 1);
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (4, 'Teacher', 1);
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (5, 'Reseacher', 1);
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (6, 'Austrounat', 1);
-INSERT INTO `SciStarter`.`roles` (`id`, `name`, `active`) VALUES (7, 'Pilot', 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (1, 'Public', 1);
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (2, 'Student', 1);
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (3, 'Professor', 1);
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (4, 'Teacher', 1);
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (5, 'Reseacher', 1);
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (6, 'Austrounat', 1);
+INSERT INTO `cryptota_luum`.`roles` (`id`, `name`, `active`) VALUES (7, 'Pilot', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`metals`
+-- Data for table `cryptota_luum`.`metals`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`metals` (`id`, `name`, `active`) VALUES (1, 'Stone', 1);
-INSERT INTO `SciStarter`.`metals` (`id`, `name`, `active`) VALUES (2, 'Plastic', 1);
-INSERT INTO `SciStarter`.`metals` (`id`, `name`, `active`) VALUES (3, 'Glass', 1);
-INSERT INTO `SciStarter`.`metals` (`id`, `name`, `active`) VALUES (4, 'Wood', 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`metals` (`id`, `name`, `active`) VALUES (1, 'Stone', 1);
+INSERT INTO `cryptota_luum`.`metals` (`id`, `name`, `active`) VALUES (2, 'Plastic', 1);
+INSERT INTO `cryptota_luum`.`metals` (`id`, `name`, `active`) VALUES (3, 'Glass', 1);
+INSERT INTO `cryptota_luum`.`metals` (`id`, `name`, `active`) VALUES (4, 'Wood', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`humitidies`
+-- Data for table `cryptota_luum`.`humitidies`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`humitidies` (`id`, `name`, `active`) VALUES (1, 'Dry', 1);
-INSERT INTO `SciStarter`.`humitidies` (`id`, `name`, `active`) VALUES (2, 'Damp', 1);
-INSERT INTO `SciStarter`.`humitidies` (`id`, `name`, `active`) VALUES (3, 'Wet', 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`humitidies` (`id`, `name`, `active`) VALUES (1, 'Dry', 1);
+INSERT INTO `cryptota_luum`.`humitidies` (`id`, `name`, `active`) VALUES (2, 'Damp', 1);
+INSERT INTO `cryptota_luum`.`humitidies` (`id`, `name`, `active`) VALUES (3, 'Wet', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`auditing`
+-- Data for table `cryptota_luum`.`auditing`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (1, 'It is received by our lab', 1);
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (2, 'it is checked for damage', 1);
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (3, 'sequencing machine', 1);
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (4, 'the sequencing is completed', 1);
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (5, 'we do our initial checks to verify that the sample was sequenced correctly', 1);
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (6, 'it moves into our statistical analysis', 1);
-INSERT INTO `SciStarter`.`auditing` (`id`, `name`, `active`) VALUES (7, 'Not sent', 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (1, 'It is received by our lab', 1);
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (2, 'it is checked for damage', 1);
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (3, 'sequencing machine', 1);
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (4, 'the sequencing is completed', 1);
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (5, 'we do our initial checks to verify that the sample was sequenced correctly', 1);
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (6, 'it moves into our statistical analysis', 1);
+INSERT INTO `cryptota_luum`.`auditing` (`id`, `name`, `active`) VALUES (7, 'Not sent', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`typeprices`
+-- Data for table `cryptota_luum`.`typeprices`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`typeprices` (`id`, `name`, `active`) VALUES (1, 'Best Science Fair Entry', 1);
-INSERT INTO `SciStarter`.`typeprices` (`id`, `name`, `active`) VALUES (2, 'Best Graphic', 1);
-INSERT INTO `SciStarter`.`typeprices` (`id`, `name`, `active`) VALUES (3, 'Best Diagram', 1);
-INSERT INTO `SciStarter`.`typeprices` (`id`, `name`, `active`) VALUES (4, 'Best Overall Analysis', 1);
-INSERT INTO `SciStarter`.`typeprices` (`id`, `name`, `active`) VALUES (5, 'Best Essay', 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`typeprices` (`id`, `name`, `active`) VALUES (1, 'Best Science Fair Entry', 1);
+INSERT INTO `cryptota_luum`.`typeprices` (`id`, `name`, `active`) VALUES (2, 'Best Graphic', 1);
+INSERT INTO `cryptota_luum`.`typeprices` (`id`, `name`, `active`) VALUES (3, 'Best Diagram', 1);
+INSERT INTO `cryptota_luum`.`typeprices` (`id`, `name`, `active`) VALUES (4, 'Best Overall Analysis', 1);
+INSERT INTO `cryptota_luum`.`typeprices` (`id`, `name`, `active`) VALUES (5, 'Best Essay', 1);
 
 COMMIT;
 
 -- -----------------------------------------------------
--- Data for table `SciStarter`.`raiting`
+-- Data for table `cryptota_luum`.`raiting`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `SciStarter`;
-INSERT INTO `SciStarter`.`raiting` (`id`, `value`, `active`) VALUES (1, 1, 1);
-INSERT INTO `SciStarter`.`raiting` (`id`, `value`, `active`) VALUES (2, 2, 1);
-INSERT INTO `SciStarter`.`raiting` (`id`, `value`, `active`) VALUES (3, 3, 1);
-INSERT INTO `SciStarter`.`raiting` (`id`, `value`, `active`) VALUES (4, 4, 1);
-INSERT INTO `SciStarter`.`raiting` (`id`, `value`, `active`) VALUES (5, 5, 1);
+USE `cryptota_luum`;
+INSERT INTO `cryptota_luum`.`raiting` (`id`, `value`, `active`) VALUES (1, 1, 1);
+INSERT INTO `cryptota_luum`.`raiting` (`id`, `value`, `active`) VALUES (2, 2, 1);
+INSERT INTO `cryptota_luum`.`raiting` (`id`, `value`, `active`) VALUES (3, 3, 1);
+INSERT INTO `cryptota_luum`.`raiting` (`id`, `value`, `active`) VALUES (4, 4, 1);
+INSERT INTO `cryptota_luum`.`raiting` (`id`, `value`, `active`) VALUES (5, 5, 1);
 
 
 COMMIT;
