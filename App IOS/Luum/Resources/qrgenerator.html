@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>qrgenerator</title>
+		<meta name="author" content="Mario Navarro" />
+		<!-- Date: 2012-10-06 -->
+	</head>
+	<body>
+		
+		<div id="output"></div>
+
+<script src="jquery.js"></script>
+<script type="text/javascript" src="qrgenerator.js"></script>
+
+
+
+<script>
+
+
+
+//Event Listener for qrgenerator
+    Ti.App.addEventListener('pollo', function(e) 
+	{ 
+	Ti.API.info('Fired in HTML');	
+	
+	var pollo = e.toQR;
+	var color = e.color;
+	Ti.API.info(pollo);
+	Ti.API.info(color); 
+	
+    jQuery(function(){
+	jQuery('#output').qrcode(pollo,color);	
+	})   
+    });
+    
+  
+</script>
+		
+
+	</body>
+</html>
+
